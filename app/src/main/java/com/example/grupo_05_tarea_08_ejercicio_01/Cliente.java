@@ -4,4 +4,8 @@ import java.io.Serializable;
 
 public class Cliente implements Serializable {
 
+    private String Dni;
+    private String Apellidos;
+    private String Nombres;
+    private String Direccion;
 }
