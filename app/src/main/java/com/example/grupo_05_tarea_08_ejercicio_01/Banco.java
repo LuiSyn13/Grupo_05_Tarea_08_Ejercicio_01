@@ -11,12 +11,7 @@ public class Banco implements Serializable {
         return ListaCliente;
     }
 
-<<<<<<< HEAD
-    private void RegistrarCliente (Cliente elemento) {
-        ListaCliente.add(elemento);
-=======
     public void setListaCliente(ArrayList<Cliente> listaCliente) {
         ListaCliente = listaCliente;
->>>>>>> 1f37612d2f5c67515874f1d484de4eba67467b39
     }
 }

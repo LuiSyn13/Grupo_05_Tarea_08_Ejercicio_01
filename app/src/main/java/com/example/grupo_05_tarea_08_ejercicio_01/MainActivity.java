@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private Operacion objOperacion = new Operacion();
+    private String textoCompartido = "Este es el texto que quiero compartir";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,5 +68,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public String getTextoCompartido() {
+        return textoCompartido;
     }
 }
