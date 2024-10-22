@@ -16,11 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.grupo_05_tarea_08_ejercicio_01.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private Operacion objOperacion = new Operacion();
+    private ArrayList<Operacion> listOperaciones = new ArrayList<>();
+    private Banco objBanco = new Banco();
     private String textoCompartido = "Este es el texto que quiero compartir";
 
     @Override
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         operacion.putString("titulo", "Los mil y unas noches UUUUU");
         NavController navCont = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navCont.navigate(R.id.nav_home, operacion);
+        loadDate();
     }
 
     @Override
@@ -70,7 +74,24 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    protected Banco List_Banco() {
+        return objBanco;
+    }
+
     public String getTextoCompartido() {
         return textoCompartido;
     }
+
+    private void loadDate () {
+        Operacion op = new Operacion(2345.35, "Transferencia");
+        ArrayList<Operacion> lop = new ArrayList<>();
+        lop.add(op);
+        Cuenta cu = new Cuenta("03452", 13000.00, lop, "cuenta aperturada");
+        ArrayList<Cuenta> lcu = new ArrayList<>();
+        lcu.add(cu);
+        Cliente cli = new Cliente("76466", "Rojas Tawua", "Sergio Lol", "S/N", "9484545", lcu);
+        objBanco.getListaCliente().add(cli);
+    }
+
+
 }

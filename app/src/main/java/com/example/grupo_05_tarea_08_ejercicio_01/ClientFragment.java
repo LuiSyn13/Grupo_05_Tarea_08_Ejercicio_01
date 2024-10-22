@@ -7,13 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ClientFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClientFragment extends Fragment {
+public class ClientFragment extends Fragment implements View.OnClickListener {
+
+    private Banco objBanco;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +62,22 @@ public class ClientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_client, container, false);
+        //return inflater.inflate(R.layout.fragment_client, container, false);
+        final View view = inflater.inflate(R.layout.fragment_client, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if(mainActivity != null) {
+            objBanco = mainActivity.List_Banco();
+            // Prueba de mostrar los datos
+            // En un metodo listar los datos de los clientes, a partir del objBanco, que sigue de la inicialiacion mainActivity
+            ((TextView) view.findViewById(R.id.tv_col01_cli)).setText(objBanco.getListaCliente().get(0).getDni());
+            ((TextView) view.findViewById(R.id.tv_col02_cli)).setText(objBanco.getListaCliente().get(0).getApellidos());
+            ((TextView) view.findViewById(R.id.tv_col03_cli)).setText(objBanco.getListaCliente().get(0).getTelefono());
+        }
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

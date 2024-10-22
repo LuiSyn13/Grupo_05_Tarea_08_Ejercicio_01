@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="verde_logo">#00BE45</color>
     <color name="azul_logo">#0039A5</color>
+    <color name="gray_200">#D3D3D3</color>
 </resources>

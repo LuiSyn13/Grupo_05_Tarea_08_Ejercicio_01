@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class Banco implements Serializable {
     private ArrayList<Cliente> ListaCliente = new ArrayList<>();
 
-
     public ArrayList<Cliente> getListaCliente() {
         return ListaCliente;
     }
