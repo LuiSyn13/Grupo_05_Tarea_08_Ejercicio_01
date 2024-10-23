@@ -102,7 +102,10 @@ public class ClientFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_addClient) {
+            Bundle contenedor = new Bundle();
             Intent intent = new Intent(v.getContext(), ClientActivity.class);
+            contenedor.putSerializable("listClient", objBanco.getListaCliente());
+            intent.putExtras(contenedor);
             launcher_client_activity.launch(intent);
         }
     }
@@ -129,7 +132,7 @@ public class ClientFragment extends Fragment implements View.OnClickListener {
             tv_02.setText(c.getApellidos());
             tv_03.setText(c.getNombres());
             tv_04.setText(c.getDireccion());
-            tv_05.setText(c.getTelefono());
+            tv_05.setText(c.getObjCuentas().get(0).getNumero());
 
             tv_01.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
             tv_02.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
