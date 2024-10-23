@@ -3,9 +3,11 @@ package com.example.grupo_05_tarea_08_ejercicio_01;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -54,6 +56,14 @@ public class Operation_DepRet_Activity extends AppCompatActivity implements View
         at_corigen_op.setThreshold(1);
         spr_corigen_op.setAdapter(adapter1);
 
+        spr_corigen_op.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String sdte = parent.getItemAtPosition(position).toString();
+                Toast.makeText(Operation_DepRet_Activity.this, "Seleccion: " + sdte, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -73,7 +83,7 @@ public class Operation_DepRet_Activity extends AppCompatActivity implements View
     private void List_spr_NCuenta() {
         for (Cliente c: listClient) {
             for (Cuenta n: c.getObjCuentas()) {
-                listNCuentas.add(n.getNumero());
+                if (n.getEstado().equals("Cuenta Aperturada")) listNCuentas.add(n.getNumero());
             }
         }
     }
