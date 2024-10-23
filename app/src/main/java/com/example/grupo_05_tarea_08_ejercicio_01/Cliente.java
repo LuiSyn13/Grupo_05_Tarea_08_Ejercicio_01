@@ -12,7 +12,7 @@ public class Cliente implements Serializable {
     private String Telefono;
     private ArrayList<Cuenta> objCuentas;
 
-    public Cliente(){}
+    public  Cliente () {}
 
     public Cliente(String dni, String apellidos, String nombres, String direccion, String telefono, ArrayList<Cuenta> objCuentas) {
         Dni = dni;
