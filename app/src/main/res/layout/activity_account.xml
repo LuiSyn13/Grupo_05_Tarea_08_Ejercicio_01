@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Con Saldo"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:layout_marginEnd="15dp"/>
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/rbtn_sinsaldo"
@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:text="Sin Saldo"
                         android:checked="true"
-                        android:textSize="20sp"/>
+                        android:textSize="18sp"/>
                 </RadioGroup>
             </LinearLayout>
             <com.google.android.material.textfield.TextInputLayout
