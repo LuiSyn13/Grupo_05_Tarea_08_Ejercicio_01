@@ -119,15 +119,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         CargarTabla();
     }
 
-    private void ListAccount(){
-        for(Cliente C:listClient){
-            ArrayList<Cuenta> cuentasCliente = C.getObjCuentas();
-            if (cuentasCliente != null && !cuentasCliente.isEmpty()) {
-                listCuentas.addAll(cuentasCliente);
-            }
-        }
-    }
-
     private void CargarTabla(){
         tl_cuentas.removeAllViews();
         for (Cliente c : listClient) {
