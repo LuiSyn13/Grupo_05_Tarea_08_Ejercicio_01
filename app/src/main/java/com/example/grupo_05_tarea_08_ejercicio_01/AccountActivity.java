@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -23,11 +28,17 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
     private Cuenta objCuenta = new Cuenta();
     private ArrayList<Cuenta> listCuentas;
-    private TextInputEditText tie_numero,tie_saldo;
+    private TextInputEditText tie_saldo;
     private RadioButton forma_consaldo, forma_sinsalso;
+    private RadioGroup rdgp_forma;
     private double saldo_acc = 0.0;
-    private String dni = "76466";
+    private int pdni = 0;
+    private int pnumero = 0;
+    private int pestado = 0;
     private ArrayList<Cliente> listCliente;
+    private AutoCompleteTextView at_cuenta_acc;
+    private ArrayList<String> listNCuentas = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +58,16 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         findViewById(R.id.btn_cancel_acc).setOnClickListener(this);
         forma_consaldo = findViewById(R.id.rbtn_consaldo);
         forma_sinsalso = findViewById(R.id.rbtn_sinsaldo);
-        tie_numero = findViewById(R.id.tie_numero_cuenta);
+        at_cuenta_acc = findViewById(R.id.tie_numero_cuenta);
         tie_saldo = findViewById(R.id.tie_saldo);
+        rdgp_forma = findViewById(R.id.rdgp_forma);
 
         forma_consaldo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     tie_saldo.setEnabled(true);
+                    pestado = 1;
                 }
             }
         });
@@ -64,13 +77,20 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     tie_saldo.setEnabled(false);
+                    tie_saldo.setText("");
                 }
             }
         });
 
 
+
+
         listCliente = (ArrayList<Cliente>) getIntent().getExtras().getSerializable("listClient");
-        tie_numero.setText(CargarCuentaSeleccion());
+        List_NCuenta();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listNCuentas);
+        at_cuenta_acc.setAdapter(adapter);
+        at_cuenta_acc.setThreshold(1);
+        ((TextView) findViewById(R.id.tv_count_acc)).setText(listNCuentas.size() + " REG.");
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -92,40 +112,63 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.btn_acept_acc){
-            RegitrarCuenta(v);
+            RegitrarCuenta();
+            Bundle contenedor_acc = new Bundle();
+            contenedor_acc.putSerializable("objCuenta", objCuenta);
+            contenedor_acc.putSerializable("pdni", pdni);
+            contenedor_acc.putSerializable("pnumero", pnumero);
+            Intent data_acc = new Intent();
+            data_acc.putExtras(contenedor_acc);
+            setResult(RESULT_OK, data_acc);
             finish();
         } else if (v.getId() == R.id.btn_cancel_acc){
             finish();
         }
     }
 
-    private void RegitrarCuenta(View vi){
-        for (Cliente C : listCliente) {
-            if(dni == C.getDni()){
-                ArrayList<Operacion> lop = new ArrayList<>();
-                objCuenta.setNumero(tie_numero.getText().toString());
-                objCuenta.setEstado("Cuenta Aperturada");
-                objCuenta.setOperaciones(lop);
-                if(vi.getId() == R.id.rbtn_consaldo){
-                    saldo_acc = Double.parseDouble(tie_saldo.getText().toString());
-                    objCuenta.setSaldo(saldo_acc);
-                } else if (vi.getId() == R.id.rbtn_sinsaldo) {
-                    objCuenta.setSaldo(saldo_acc);
+    private void RegitrarCuenta(){
+        ArrayList<Operacion> lop = new ArrayList<>();
+        objCuenta.setNumero(at_cuenta_acc.getText().toString());
+        objCuenta.setEstado("Cuenta Aperturada");
+        objCuenta.setOperaciones(lop);
+        int selectID = rdgp_forma.getCheckedRadioButtonId();
+        if (selectID != -1) {
+            RadioButton rdb = findViewById(selectID);
+            String idRdb = rdb.getText().toString();
+            if (idRdb.contentEquals("Con Saldo")) {
+                if (tie_saldo.getText().toString().isEmpty()) {
+                    tie_saldo.setError("Campo obligatorio");
+                    objCuenta.setSaldo(0.0);
+                } else {
+                    objCuenta.setSaldo(Double.parseDouble(tie_saldo.getText().toString()));
                 }
-                listCuentas = C.getObjCuentas();
-                listCuentas.add(objCuenta);
-                Bundle contenedor_acc = new Bundle();
-                contenedor_acc.putSerializable("objCuenta", objCuenta);
-                Intent data_acc = new Intent();
-                data_acc.putExtras(contenedor_acc);
-                setResult(RESULT_OK, data_acc);
+            } else {
+                objCuenta.setSaldo(0.0);
             }
         }
-
-
+        for (int i = 0; i < listCliente.size(); i++) {
+            for (int j = 0; j < listCliente.get(i).getObjCuentas().size(); j++) {
+                if (listCliente.get(i).getObjCuentas().get(j).getNumero().contentEquals(at_cuenta_acc.getText())) {
+                    pdni = i;
+                    pnumero = j;
+                    return;
+                }
+            }
+        }
     }
     private String CargarCuentaSeleccion(){
         String cuenta = "INK" + listCliente.size() + 1;
         return cuenta;
     }
+
+    private void List_NCuenta() {
+        for (Cliente c: listCliente) {
+            for (Cuenta n: c.getObjCuentas()) {
+                if (n.getEstado().equals("No Aperturada")) {
+                    listNCuentas.add(n.getNumero());
+                }
+            }
+        }
+    }
+
 }

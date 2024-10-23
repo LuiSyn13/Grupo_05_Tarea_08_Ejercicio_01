@@ -18,7 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 
 public class Operation_DepRet_Activity extends AppCompatActivity implements View.OnClickListener {
-    private ArrayList<Cliente> objClient;
+    private ArrayList<Cliente> listClient;
     private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter1;
     private ArrayList<String> listNCuentas = new ArrayList<>();
@@ -42,13 +42,12 @@ public class Operation_DepRet_Activity extends AppCompatActivity implements View
                 finish();
             }
         };
-        objClient = (ArrayList<Cliente>) getIntent().getExtras().getSerializable("listClient");
+        listClient = (ArrayList<Cliente>) getIntent().getExtras().getSerializable("listClient");
 
         getOnBackPressedDispatcher().addCallback(callback);
         at_corigen_op = findViewById(R.id.at_corigen_op);
         spr_corigen_op = findViewById(R.id.spr_corigen_op);
         List_spr_NCuenta();
-        String[] items = {"Depósito", "Retiro", "Transferencia entre cuentas", "Transferencia a terceros"};
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listNCuentas);
         adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, listNCuentas);
         at_corigen_op.setAdapter(adapter);
@@ -72,7 +71,7 @@ public class Operation_DepRet_Activity extends AppCompatActivity implements View
     }
 
     private void List_spr_NCuenta() {
-        for (Cliente c: objClient) {
+        for (Cliente c: listClient) {
             for (Cuenta n: c.getObjCuentas()) {
                 listNCuentas.add(n.getNumero());
             }

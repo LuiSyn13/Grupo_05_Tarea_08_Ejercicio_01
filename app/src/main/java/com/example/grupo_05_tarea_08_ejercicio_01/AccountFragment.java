@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -90,7 +91,10 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                 Intent data = result.getData();
                 Bundle contenedor = data.getExtras();
                 objCuenta = (Cuenta) contenedor.getSerializable("objCuenta");
-                listCuentas.add(objCuenta);
+                int i = (int) contenedor.getSerializable("pdni");
+                int j = (int) contenedor.getSerializable("pnumero");
+                objBanco.getListaCliente().get(i).getObjCuentas().get(j).setSaldo(objCuenta.getSaldo());
+                objBanco.getListaCliente().get(i).getObjCuentas().get(j).setEstado(objCuenta.getEstado().toString());
             } else if (result.getResultCode() == RESULT_CANCELED) {
             }
         });
@@ -126,27 +130,27 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
     private void CargarTabla(){
         tl_cuentas.removeAllViews();
-        ListAccount();
-        for (Cuenta c : listCuentas) {
-            TableRow tr = new TableRow(getContext());
+        for (Cliente c : listClient) {
+            for (Cuenta ct: c.getObjCuentas()) {
+                TableRow tr = new TableRow(getContext());
+                TextView tv_01 = new TextView(getContext());
+                TextView tv_02 = new TextView(getContext());
+                TextView tv_03 = new TextView(getContext());
 
-            TextView tv_01 = new TextView(getContext());
-            TextView tv_02 = new TextView(getContext());
-            TextView tv_03 = new TextView(getContext());
+                tv_01.setText(ct.getNumero());
+                tv_02.setText(ct.getSaldo().toString());
+                tv_03.setText(ct.getEstado());
 
-            tv_01.setText(c.getNumero());
-            tv_02.setText(c.getSaldo().toString());
-            tv_03.setText(c.getEstado());
+                tv_01.setLayoutParams(new TableRow.LayoutParams(0,TableRow.LayoutParams.WRAP_CONTENT, 1));
+                tv_02.setLayoutParams(new TableRow.LayoutParams(0,TableRow.LayoutParams.WRAP_CONTENT, 1));
+                tv_03.setLayoutParams(new TableRow.LayoutParams(0,TableRow.LayoutParams.WRAP_CONTENT, 1));
 
-            tv_01.setLayoutParams(new TableRow.LayoutParams(0,TableRow.LayoutParams.WRAP_CONTENT, 1));
-            tv_02.setLayoutParams(new TableRow.LayoutParams(0,TableRow.LayoutParams.WRAP_CONTENT, 1));
-            tv_03.setLayoutParams(new TableRow.LayoutParams(0,TableRow.LayoutParams.WRAP_CONTENT, 1));
+                tr.addView(tv_01);
+                tr.addView(tv_02);
+                tr.addView(tv_03);
 
-            tr.addView(tv_01);
-            tr.addView(tv_02);
-            tr.addView(tv_03);
-
-            tl_cuentas.addView(tr);
+                tl_cuentas.addView(tr);
+            }
         }
     }
 
