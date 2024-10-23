@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         Operacion op = new Operacion(2345.35, "Transferencia");
         ArrayList<Operacion> lop = new ArrayList<>();
         lop.add(op);
-        Cuenta cu = new Cuenta("03452", 13000.00, lop, "cuenta aperturada");
+        Cuenta cu = new Cuenta("03452", 13000.00, lop, "Cuenta Aperturada");
         ArrayList<Cuenta> lcu = new ArrayList<>();
         lcu.add(cu);
         Cliente cli = new Cliente("76466", "Rojas Tawua", "Sergio Lol", "S/N", "9484545", lcu);

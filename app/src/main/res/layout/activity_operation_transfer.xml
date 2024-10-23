@@ -6,5 +6,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Operation_Transfer_Activity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Depósito"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:background="@color/azul_logo"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cuenta origen:"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="N° de cuenta"
+                android:background="@drawable/botom_01_roundered_01"
+                android:padding="10dp"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_downward_24"
+                android:layout_marginVertical="10dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cuenta destino:"
+                android:layout_marginBottom="10dp"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/botom_01_roundered_01"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Monto (S/):"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="S/"
+                android:background="@drawable/botom_01_roundered_01"
+                android:padding="10dp"
+                android:layout_marginVertical="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Cancelar"
+                    app:backgroundTint="@color/gray_200"
+                    android:textColorHint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginEnd="5dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Registrar"
+                    app:backgroundTint="@color/verde_logo"
+                    android:textColorHint="@color/white"
+                    android:padding="10dp"
+                    android:layout_marginStart="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
