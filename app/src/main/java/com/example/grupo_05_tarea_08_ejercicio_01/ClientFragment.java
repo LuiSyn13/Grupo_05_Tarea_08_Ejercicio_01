@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ public class ClientFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Cliente> listClient;
     private Cliente objCliente;
     private ActivityResultLauncher<Intent> launcher_client_activity;
+    private TableLayout tl_client;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,27 +82,20 @@ public class ClientFragment extends Fragment implements View.OnClickListener {
         MainActivity mainActivity = (MainActivity) getActivity();
         if(mainActivity != null) {
             objBanco = mainActivity.List_Banco();
-            // Prueba de mostrar los datos
-            // En un metodo listar los datos de los clientes, a partir del objBanco, que sigue de la inicialiacion mainActivity
-            ((TextView) view.findViewById(R.id.tv_col01_cli)).setText(objBanco.getListaCliente().get(0).getDni());
-            ((TextView) view.findViewById(R.id.tv_col02_cli)).setText(objBanco.getListaCliente().get(0).getApellidos());
-            ((TextView) view.findViewById(R.id.tv_col03_cli)).setText(objBanco.getListaCliente().get(0).getTelefono());
         }
         view.findViewById(R.id.btn_addClient).setOnClickListener(this);
+        tl_client = view.findViewById(R.id.tl_client);
 
         launcher_client_activity = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK) {
                 Intent data = result.getData();
                 Bundle contenedor = data.getExtras();
-                //listClient = (ArrayList<Cliente>) contenedor.getSerializable("objCliente");
                 objCliente = (Cliente) contenedor.getSerializable("objCliente");
                 objBanco.getListaCliente().add(objCliente);
-                Toast.makeText(mainActivity, objBanco.getListaCliente().size() + " LOL", Toast.LENGTH_SHORT).show();
             } else if (result.getResultCode() == RESULT_CANCELED) {
-                Toast.makeText(mainActivity, "No se guardaron los datos", Toast.LENGTH_SHORT).show();
             }
         });
-
+        //ListClient();
         return view;
     }
 
@@ -108,6 +104,46 @@ public class ClientFragment extends Fragment implements View.OnClickListener {
         if (v.getId() == R.id.btn_addClient) {
             Intent intent = new Intent(v.getContext(), ClientActivity.class);
             launcher_client_activity.launch(intent);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ListClient();
+        //Toast.makeText(getView().getContext(), "LOL", Toast.LENGTH_SHORT).show();
+    }
+
+    private void ListClient() {
+        tl_client.removeAllViews();
+        for (Cliente c: objBanco.getListaCliente()) {
+            TableRow tr = new TableRow(getContext());
+
+            TextView tv_01 = new TextView(getContext());
+            TextView tv_02 = new TextView(getContext());
+            TextView tv_03 = new TextView(getContext());
+            TextView tv_04 = new TextView(getContext());
+            TextView tv_05 = new TextView(getContext());
+
+            tv_01.setText(c.getDni());
+            tv_02.setText(c.getApellidos());
+            tv_03.setText(c.getNombres());
+            tv_04.setText(c.getDireccion());
+            tv_05.setText(c.getTelefono());
+
+            tv_01.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+            tv_02.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+            tv_03.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+            tv_04.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+            tv_05.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tr.addView(tv_01);
+            tr.addView(tv_02);
+            tr.addView(tv_03);
+            tr.addView(tv_04);
+            tr.addView(tv_05);
+
+            tl_client.addView(tr);
         }
     }
 }

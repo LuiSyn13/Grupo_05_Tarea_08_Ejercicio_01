@@ -22,9 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    private ArrayList<Operacion> listOperaciones = new ArrayList<>();
     private Banco objBanco = new Banco();
-    private String textoCompartido = "Este es el texto que quiero compartir";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +50,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        Bundle operacion = new Bundle();
-        operacion.putString("titulo", "Los mil y unas noches UUUUU");
-        NavController navCont = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        navCont.navigate(R.id.nav_home, operacion);
         loadDate();
     }
 
@@ -74,12 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    protected Banco List_Banco() {
+    public Banco List_Banco() {
         return objBanco;
-    }
-
-    public String getTextoCompartido() {
-        return textoCompartido;
     }
 
     private void loadDate () {
