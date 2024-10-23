@@ -6,9 +6,83 @@
     tools:context=".ClientFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lista de clientes"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:paddingStart="10dp"
+            android:background="@color/azul_logo"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <TableLayout
+                    android:id="@+id/tl_client"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <TableRow>
+                        <TextView
+                            android:id="@+id/tv_col01_cli"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Columna 01"
+                            android:textAlignment="center"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/tv_col02_cli"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Columna 01"
+                            android:textAlignment="center"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/tv_col03_cli"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Columna 01"
+                            android:textAlignment="center"
+                            android:textStyle="bold"/>
+                    </TableRow>
+                </TableLayout>
+            </ScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Cerrar"
+                    android:backgroundTint="@color/gray_200"
+                    android:layout_marginEnd="5dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_addClient"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Registar"
+                    android:backgroundTint="@color/verde_logo"
+                    android:layout_marginStart="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

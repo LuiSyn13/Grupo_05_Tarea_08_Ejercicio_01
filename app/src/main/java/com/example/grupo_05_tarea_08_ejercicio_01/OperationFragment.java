@@ -62,11 +62,6 @@ public class OperationFragment extends Fragment {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_operation, container, false);
         final View view =inflater.inflate(R.layout.fragment_operation, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        if (mainActivity != null) {
-            String texto = mainActivity.getTextoCompartido();
-            ((TextView) view.findViewById(R.id.tv_prueba_ope)).setText(texto);
-        }
         return view;
     }
 }

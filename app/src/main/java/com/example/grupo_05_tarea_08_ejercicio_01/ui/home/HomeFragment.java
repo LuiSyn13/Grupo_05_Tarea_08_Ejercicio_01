@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.grupo_05_tarea_08_ejercicio_01.Banco;
+import com.example.grupo_05_tarea_08_ejercicio_01.MainActivity;
 import com.example.grupo_05_tarea_08_ejercicio_01.R;
 import com.example.grupo_05_tarea_08_ejercicio_01.databinding.FragmentHomeBinding;
 
@@ -19,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-
+    private Banco objBanco;
     private FragmentHomeBinding binding;
     private TextView tv_prueba;
 
@@ -30,14 +32,13 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        /*MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            objBanco = mainActivity.List_Banco();
 
-        TextView textoAs = root.findViewById(R.id.tv_prueba);
-        Bundle operacion = getArguments();
-        if (operacion != null) {
-            String mit = operacion.getString("titulo");
-            textoAs.setText(mit);
-        }
-        //textoAs.setText("HOLA MUNDO, MARTIN");
+        }*/
+
+
 
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
@@ -54,5 +55,14 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity mainActivity = (MainActivity) getActivity();
+        objBanco = mainActivity.List_Banco();
+        TextView textoAs = getView().findViewById(R.id.tv_prueba);
+        textoAs.setText(objBanco.getListaCliente().size() + " AWUITA");
     }
 }
