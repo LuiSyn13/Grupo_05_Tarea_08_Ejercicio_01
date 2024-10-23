@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 public class ClientActivity extends AppCompatActivity implements View.OnClickListener {
     private Cliente objCliente = new Cliente();
+    private ArrayList<Cliente> listClient;
     private TextInputEditText tie_dni_cli, tie_apel_cli, tie_nomb_cli, tie_dire_cli, tie_telf_cli;
 
     @Override
@@ -44,7 +46,8 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
         tie_dire_cli = findViewById(R.id.tie_dire_cli);
         tie_telf_cli = findViewById(R.id.tie_telf_cli);
 
-        //listClient = (ArrayList<Cliente>) getIntent().getExtras().getSerializable("banco");
+        listClient = (ArrayList<Cliente>) getIntent().getExtras().getSerializable("listClient");
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -75,6 +78,10 @@ public class ClientActivity extends AppCompatActivity implements View.OnClickLis
 
     private void RegisterDate() {
         ArrayList<Cuenta> lcu = new ArrayList<>();
+        ArrayList<Operacion> lop = new ArrayList<>();
+        lcu.add(new Cuenta("INK" + listClient.size() + 0, 0.0, lop, "No Aperturada"));
+        lcu.add(new Cuenta("INK" + listClient.size() + 1, 0.0, lop, "No Aperturada"));
+        lcu.add(new Cuenta("INK" + listClient.size() + 2, 0.0, lop, "No Aperturada"));
         objCliente.setDni(tie_dni_cli.getText().toString());
         objCliente.setApellidos(tie_apel_cli.getText().toString());
         objCliente.setNombres(tie_nomb_cli.getText().toString());

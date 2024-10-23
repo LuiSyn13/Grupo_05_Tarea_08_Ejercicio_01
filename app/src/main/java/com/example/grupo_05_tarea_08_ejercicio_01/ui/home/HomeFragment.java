@@ -32,16 +32,6 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        /*MainActivity mainActivity = (MainActivity) getActivity();
-        if (mainActivity != null) {
-            objBanco = mainActivity.List_Banco();
-
-        }*/
-
-
-
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         Spinner descubre = binding.spnDescubrelo;
         List<String> descubrelo = Arrays.asList("Conoce sobre Plin","Plinea en POS", "Promociones","¿Tienes dudas?");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, descubrelo);
