@@ -1,21 +1,32 @@
 package com.example.grupo_05_tarea_08_ejercicio_01;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OperationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OperationFragment extends Fragment {
-    private TextView tv_prueba_ope;
+public class OperationFragment extends Fragment implements View.OnClickListener {
+    private Banco objBanco;
+    private ActivityResultLauncher<Intent> launcher_operation_activity;
+    private TableLayout tl_operation;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,7 +72,68 @@ public class OperationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_operation, container, false);
-        final View view =inflater.inflate(R.layout.fragment_operation, container, false);
+        final View view = inflater.inflate(R.layout.fragment_operation, container, false);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            objBanco = mainActivity.List_Banco();
+        }
+        view.findViewById(R.id.btn_addOperation).setOnClickListener(this);
+        tl_operation = view.findViewById(R.id.tl_operation);
+
+        launcher_operation_activity = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+           if (result.getResultCode() == RESULT_OK) {
+               Toast.makeText(mainActivity, "Success", Toast.LENGTH_SHORT).show();
+           } else if (result.getResultCode() == RESULT_CANCELED) {
+           }
+        });
+
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ListOperations();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_addOperation) {
+            Bundle contenedor = new Bundle();
+            Intent intent = new Intent(v.getContext(), OperationActivity.class);
+            contenedor.putSerializable("listClient", objBanco.getListaCliente());
+            intent.putExtras(contenedor);
+            launcher_operation_activity.launch(intent);
+        }
+    }
+
+    private void ListOperations() {
+        tl_operation.removeAllViews();
+        for (Cliente c: objBanco.getListaCliente()) {
+            for (int i = 0; i < c.getObjCuentas().size(); i++) {
+                for (int j = 0; j < c.getObjCuentas().get(i).getOperaciones().size(); j++) {
+                    TableRow tr = new TableRow(getContext());
+
+                    TextView tv_nume = new TextView(getContext());
+                    TextView tv_mont = new TextView(getContext());
+                    TextView tv_tipo = new TextView(getContext());
+
+                    tv_nume.setText(c.getObjCuentas().get(i).getNumero());
+                    tv_mont.setText(c.getObjCuentas().get(i).getOperaciones().get(j).getMonto().toString());
+                    tv_tipo.setText(c.getObjCuentas().get(i).getOperaciones().get(j).getTipo());
+
+                    tv_nume.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+                    tv_mont.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+                    tv_tipo.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+                    tr.addView(tv_nume);
+                    tr.addView(tv_mont);
+                    tr.addView(tv_tipo);
+
+                    tl_operation.addView(tr);
+                }
+            }
+        }
+    }
+
 }
