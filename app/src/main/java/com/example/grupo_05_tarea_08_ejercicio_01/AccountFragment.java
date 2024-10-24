@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -85,6 +84,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         }
         listClient = objBanco.getListaCliente();
         vista.findViewById(R.id.btn_addAccount).setOnClickListener(this);
+        vista.findViewById(R.id.btn_detalle_cuenta).setOnClickListener(this);
         tl_cuentas = vista.findViewById(R.id.tl_accounts);
         launcher_cuenta_activity = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->{
             if (result.getResultCode() == RESULT_OK) {
@@ -110,6 +110,9 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
             contenedor.putSerializable("listAccount",listCuentas);
             intent_add_account.putExtras(contenedor);
             launcher_cuenta_activity.launch(intent_add_account);
+        } else if (v.getId() == R.id.btn_detalle_cuenta) {
+            Intent intent = new Intent(v.getContext(), EditAccountFragment.class);
+            startActivity(intent);
         }
     }
 
@@ -139,6 +142,8 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                 tr.addView(tv_01);
                 tr.addView(tv_02);
                 tr.addView(tv_03);
+
+
 
                 tl_cuentas.addView(tr);
             }
