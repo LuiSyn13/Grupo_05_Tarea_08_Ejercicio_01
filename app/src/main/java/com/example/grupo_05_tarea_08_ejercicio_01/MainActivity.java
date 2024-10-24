@@ -1,5 +1,6 @@
 package com.example.grupo_05_tarea_08_ejercicio_01;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.Menu;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -81,6 +83,4 @@ public class MainActivity extends AppCompatActivity {
         Cliente cli = new Cliente("76466", "Rojas Tawua", "Sergio Lol", "S/N", "9484545", lcu);
         objBanco.getListaCliente().add(cli);
     }
-
-
 }
