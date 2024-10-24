@@ -140,17 +140,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                 tr.addView(tv_02);
                 tr.addView(tv_03);
 
-                tr.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Bundle contenedor = new Bundle();
-                        contenedor.putSerializable("cuentaselect",ct);
-                        EditAccountFragment editFragment = new EditAccountFragment();
-                        editFragment.setArguments(contenedor);
-                        Intent intent = new Intent(v.getContext(), EditAccountFragment.class);
-                        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, editFragment).addToBackStack(null).commit();
-                    }
-                });
+
 
                 tl_cuentas.addView(tr);
             }
