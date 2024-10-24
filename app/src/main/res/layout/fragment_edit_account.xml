@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -101,30 +101,53 @@
                     android:textSize="18sp"
                     android:layout_marginEnd="5dp"/>
                 <TextView
-                    android:id="@+id/tv_aper"
+                    android:id="@+id/tv_estado_acc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No Aperturada"
                     android:layout_marginStart="15dp"/>
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/rbtn_estado"
+                    android:id="@+id/rbtn_apert_acc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Aperturar"
-                    android:textSize="18sp"
-                    android:layout_marginStart="15dp"/>
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"/>
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbtn_close_acc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cerrar"
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"/>
             </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="N° de Operaciones:"
-                android:textColor="@color/verde_logo"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="N° de Operaciones:"
+                    android:textColor="@color/verde_logo"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_register_oper_acc"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Registrar Operación"
+                    android:textColorHint="@color/white"
+                    android:layout_marginStart="5dp"
+                    android:padding="10dp"
+                    android:backgroundTint="@color/azul_logo"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
                 <LinearLayout
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
@@ -170,6 +193,36 @@
                         android:textColor="@color/black"/>
                 </LinearLayout>
             </LinearLayout>
+            <ListView
+                android:id="@+id/lv_list_oper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="5dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel_edit_acc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Cancelar"
+                android:layout_marginEnd="5dp"
+                android:padding="10dp"
+                android:backgroundTint="@color/gray_200"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_acept_edit_acc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Aceptar"
+                android:textColorHint="@color/white"
+                android:layout_marginStart="5dp"
+                android:padding="10dp"
+                android:backgroundTint="@color/verde_logo"/>
         </LinearLayout>
     </LinearLayout>
 

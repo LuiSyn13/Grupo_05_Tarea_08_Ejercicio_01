@@ -140,6 +140,8 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                 tr.addView(tv_02);
                 tr.addView(tv_03);
 
+
+
                 tl_cuentas.addView(tr);
             }
         }
