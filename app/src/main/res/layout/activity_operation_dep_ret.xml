@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/tv_titulo_dr_op"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Depósito"
@@ -30,6 +31,14 @@
                 android:layout_height="wrap_content"
                 android:text="Cuenta origen:"
                 android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/tv_saldoAct_dr_op"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saldo (S/)"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                android:textAlignment="textEnd"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:text="Monto (S/):"/>
             <EditText
+                android:id="@+id/et_monto_dr_op"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="S/"
@@ -70,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cancel_dr_op"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -79,6 +90,7 @@
                     android:padding="10dp"
                     android:layout_marginEnd="5dp"/>
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_register_dr_op"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -25,6 +25,7 @@ import android.widget.Toast;
  */
 public class OperationFragment extends Fragment implements View.OnClickListener {
     private Banco objBanco;
+    private Operacion objOperacion;
     private ActivityResultLauncher<Intent> launcher_operation_activity;
     private TableLayout tl_operation;
     // TODO: Rename parameter arguments, choose names that match
@@ -82,7 +83,20 @@ public class OperationFragment extends Fragment implements View.OnClickListener 
 
         launcher_operation_activity = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
            if (result.getResultCode() == RESULT_OK) {
-               Toast.makeText(mainActivity, "Success", Toast.LENGTH_SHORT).show();
+               Intent data = result.getData();
+               Bundle contenedor = data.getExtras();
+               objOperacion = (Operacion) contenedor.getSerializable("objOperacion");
+               int i = (int) contenedor.getSerializable("pdni");
+               int j = (int) contenedor.getSerializable("pnumero");
+               double x = objBanco.getListaCliente().get(i).getObjCuentas().get(j).getSaldo();
+               objBanco.getListaCliente().get(i).getObjCuentas().get(j).getOperaciones().add(new Operacion(objOperacion.getMonto(), objOperacion.getTipo()));
+               if (objOperacion.getTipo().equals("Depósito")) {
+                   objBanco.getListaCliente().get(i).getObjCuentas().get(j).setSaldo(x + objOperacion.getMonto());
+               } else if (objOperacion.getTipo().equals("Retiro")) {
+                   objBanco.getListaCliente().get(i).getObjCuentas().get(j).setSaldo(x - objOperacion.getMonto());
+               }
+
+               Toast.makeText(mainActivity, i + " JP", Toast.LENGTH_SHORT).show();
            } else if (result.getResultCode() == RESULT_CANCELED) {
            }
         });
@@ -109,28 +123,33 @@ public class OperationFragment extends Fragment implements View.OnClickListener 
 
     private void ListOperations() {
         tl_operation.removeAllViews();
-        for (Cliente c: objBanco.getListaCliente()) {
-            for (int i = 0; i < c.getObjCuentas().size(); i++) {
-                for (int j = 0; j < c.getObjCuentas().get(i).getOperaciones().size(); j++) {
-                    TableRow tr = new TableRow(getContext());
+        for (int i = 0; i < objBanco.getListaCliente().size(); i++) {
+            for (int j = 0; j < objBanco.getListaCliente().get(i).getObjCuentas().size(); j++) {
+                if (objBanco.getListaCliente().get(i).getObjCuentas().get(j).getEstado().equals("Cuenta Aperturada")) {
+                    for (Operacion o: objBanco.getListaCliente().get(i).getObjCuentas().get(j).getOperaciones()) {
 
-                    TextView tv_nume = new TextView(getContext());
-                    TextView tv_mont = new TextView(getContext());
-                    TextView tv_tipo = new TextView(getContext());
+                        TableRow tr = new TableRow(getContext());
 
-                    tv_nume.setText(c.getObjCuentas().get(i).getNumero());
-                    tv_mont.setText(c.getObjCuentas().get(i).getOperaciones().get(j).getMonto().toString());
-                    tv_tipo.setText(c.getObjCuentas().get(i).getOperaciones().get(j).getTipo());
+                        TextView tv_nume = new TextView(getContext());
+                        TextView tv_mont = new TextView(getContext());
+                        TextView tv_tipo = new TextView(getContext());
 
-                    tv_nume.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-                    tv_mont.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
-                    tv_tipo.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+                        tv_nume.setText(objBanco.getListaCliente().get(i).getObjCuentas().get(j).getNumero());
+                        tv_mont.setText(o.getMonto().toString());
+                        tv_tipo.setText(o.getTipo());
 
-                    tr.addView(tv_nume);
-                    tr.addView(tv_mont);
-                    tr.addView(tv_tipo);
+                        tv_nume.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+                        tv_mont.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
+                        tv_tipo.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
 
-                    tl_operation.addView(tr);
+                        tr.addView(tv_nume);
+                        tr.addView(tv_mont);
+                        tr.addView(tv_tipo);
+
+                        tl_operation.addView(tr);
+
+
+                    }
                 }
             }
         }

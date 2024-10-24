@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Depósito"
+            android:text="Transferencia"
             android:textSize="16sp"
             android:textColor="@color/white"
             android:padding="10dp"
@@ -31,11 +31,31 @@
                 android:text="Cuenta origen:"
                 android:layout_marginBottom="10dp"/>
             <TextView
+                android:id="@+id/tv_saldoAct_dr_op"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="N° de cuenta"
-                android:background="@drawable/botom_01_roundered_01"
-                android:padding="10dp"/>
+                android:text="Saldo (S/)"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                android:textAlignment="textEnd"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <AutoCompleteTextView
+                    android:id="@+id/at_corigen_transf_op"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Ingresar"
+                    android:background="@drawable/botom_01_roundered_01"
+                    android:padding="10dp"/>
+                <Spinner
+                    android:id="@+id/spr_corigen_transf_op"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"/>
+            </LinearLayout>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,17 +66,30 @@
                 android:layout_height="wrap_content"
                 android:text="Cuenta destino:"
                 android:layout_marginBottom="10dp"/>
-            <Spinner
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/botom_01_roundered_01"
-                android:padding="10dp"
-                android:layout_marginBottom="10dp"/>
+                android:orientation="horizontal">
+                <AutoCompleteTextView
+                    android:id="@+id/at_cdestino_transf_op"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Ingresar"
+                    android:background="@drawable/botom_01_roundered_01"
+                    android:padding="10dp"/>
+                <Spinner
+                    android:id="@+id/spr_cdestino_transf_op"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"/>
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Monto (S/):"/>
             <EditText
+                android:id="@+id/et_monto_transf_op"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="S/"
@@ -68,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cancel_transf_op"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -77,6 +111,7 @@
                     android:padding="10dp"
                     android:layout_marginEnd="5dp"/>
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_register_transf_op"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

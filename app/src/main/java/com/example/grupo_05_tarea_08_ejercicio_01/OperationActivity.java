@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -17,7 +19,12 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 
 public class OperationActivity extends AppCompatActivity implements View.OnClickListener {
-    ArrayList<Cliente> objClient;
+    private ArrayList<Cliente> objClient;
+    private ActivityResultLauncher<Intent> launcher_operacion_activity_dep;
+    private ActivityResultLauncher<Intent> launcher_operacion_activity_ret;
+    private ActivityResultLauncher<Intent> launcher_operacion_activity_tcu;
+    private ActivityResultLauncher<Intent> launcher_operacion_activity_tte;
+    private Operacion objOperacion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +47,58 @@ public class OperationActivity extends AppCompatActivity implements View.OnClick
         getOnBackPressedDispatcher().addCallback(callback);
 
         findViewById(R.id.btn_deposito_op).setOnClickListener(this);
+        findViewById(R.id.btn_retiro_op).setOnClickListener(this);
+        findViewById(R.id.btn_transfCuenta_op).setOnClickListener(this);
+        findViewById(R.id.btn_transfTercero_op).setOnClickListener(this);
+
+        launcher_operacion_activity_dep = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+           if (result.getResultCode() == RESULT_OK) {
+               Intent data = result.getData();
+               Bundle contenedor = data.getExtras();
+               Intent salida = new Intent();
+               Bundle csalida = new Bundle();
+               csalida.putSerializable("objOperacion", contenedor.getSerializable("objOperacion"));
+               csalida.putSerializable("pdni", contenedor.getSerializable("pdni"));
+               csalida.putSerializable("pnumero", contenedor.getSerializable("pnumero"));
+               salida.putExtras(csalida);
+               setResult(RESULT_OK, salida);
+               finish();
+           } else if (result.getResultCode() == RESULT_CANCELED){
+               Toast.makeText(this, "Fallo", Toast.LENGTH_SHORT).show();
+           }
+        });
+        launcher_operacion_activity_ret = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+           if (result.getResultCode() == RESULT_OK) {
+               Intent data = result.getData();
+               Bundle contenedor = data.getExtras();
+               Intent salida = new Intent();
+               Bundle csalida = new Bundle();
+               csalida.putSerializable("objOperacion", contenedor.getSerializable("objOperacion"));
+               csalida.putSerializable("pdni", contenedor.getSerializable("pdni"));
+               csalida.putSerializable("pnumero", contenedor.getSerializable("pnumero"));
+               salida.putExtras(csalida);
+               setResult(RESULT_OK, salida);
+               finish();
+           } else if (result.getResultCode() == RESULT_CANCELED){
+               Toast.makeText(this, "Fallo", Toast.LENGTH_SHORT).show();
+           }
+        });
+        launcher_operacion_activity_tcu = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+           if (result.getResultCode() == RESULT_OK) {
+               Intent data = result.getData();
+               Bundle contenedor = data.getExtras();
+               Intent salida = new Intent();
+               Bundle csalida = new Bundle();
+               csalida.putSerializable("objOperacion", contenedor.getSerializable("objOperacion"));
+               csalida.putSerializable("pdni", contenedor.getSerializable("pdni"));
+               csalida.putSerializable("pnumero", contenedor.getSerializable("pnumero"));
+               salida.putExtras(csalida);
+               setResult(RESULT_OK, salida);
+               finish();
+           } else if (result.getResultCode() == RESULT_CANCELED){
+               Toast.makeText(this, "Fallo", Toast.LENGTH_SHORT).show();
+           }
+        });
     }
 
     @Override
@@ -57,14 +116,32 @@ public class OperationActivity extends AppCompatActivity implements View.OnClick
             Bundle contenedor = new Bundle();
             Intent intent = new Intent(v.getContext(), Operation_DepRet_Activity.class);
             contenedor.putSerializable("listClient", objClient);
+            contenedor.putSerializable("tipo_op", "Depósito");
             intent.putExtras(contenedor);
-            startActivity(intent);
+            Toast.makeText(this, "Depósito", Toast.LENGTH_SHORT).show();
+            launcher_operacion_activity_dep.launch(intent);
+        } else if (v.getId() == R.id.btn_retiro_op) {
+            Bundle contenedor = new Bundle();
+            Intent intent = new Intent(v.getContext(), Operation_DepRet_Activity.class);
+            contenedor.putSerializable("listClient", objClient);
+            contenedor.putSerializable("tipo_op", "Retiro");
+            intent.putExtras(contenedor);
+            Toast.makeText(this, "Retiro", Toast.LENGTH_SHORT).show();
+            launcher_operacion_activity_ret.launch(intent);
+        } else if (v.getId() == R.id.btn_transfCuenta_op) {
+            Bundle contenedor = new Bundle();
+            Intent intent = new Intent(v.getContext(), Operation_Transfer_Activity.class);
+            contenedor.putSerializable("listClient", objClient);
+            contenedor.putSerializable("tipo_op", "Transferencia entre cuenta");
+            intent.putExtras(contenedor);
+            Toast.makeText(this, "Transferencia entre cuenta", Toast.LENGTH_SHORT).show();
+            launcher_operacion_activity_tcu.launch(intent);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, objClient.size() + " AGUU", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "JOJOJOJO", Toast.LENGTH_SHORT).show();
     }
 }

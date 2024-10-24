@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EditAccountFragment#newInstance} factory method to
@@ -23,6 +25,7 @@ public class EditAccountFragment extends Fragment {
     private Button btnRealizarOperacion;
     private ListView lvOperaciones;
     private Cuenta cuentaSeleccionada;
+    private Banco objBanco = new Banco();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -107,25 +110,29 @@ public class EditAccountFragment extends Fragment {
                 }
             }
 
-            // Mostrar cantidad de operaciones
             tvCantidadDepositos.setText(String.valueOf(cantidadDepositos));
             tvCantidadRetiros.setText(String.valueOf(cantidadRetiros));
 
-            // Habilitar o deshabilitar botón de operación según el estado de la cuenta
             if (cuentaSeleccionada.getEstado().equals("No Aperturada")) {
                 btnRealizarOperacion.setEnabled(false);
             } else if (cuentaSeleccionada.getEstado().equals("Aperturada")) {
                 btnRealizarOperacion.setEnabled(true);
             }
-
-            // Cargar operaciones en el ListView
             cargarOperacionesEnListView();
         }
     }
 
     private Cliente obtenerClientePorCuenta(Cuenta cuenta) {
-        // Simular búsqueda de cliente por cuenta
-        // Aquí deberías implementar la lógica real para obtener el cliente
+        ArrayList<Cliente> listClientes = objBanco.getListaCliente();
+        for (Cliente cliente : listClientes) {
+            for (Cuenta c : cliente.getObjCuentas()) {
+                if (c.getNumero().equals(cuenta.getNumero())) {
+                    return cliente;
+                }
+            }
+        }
+        return null;
+
     }
 
     private void cargarOperacionesEnListView() {
