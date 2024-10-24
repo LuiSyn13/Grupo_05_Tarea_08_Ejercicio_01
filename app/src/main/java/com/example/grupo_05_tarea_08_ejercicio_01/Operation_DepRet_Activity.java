@@ -78,7 +78,6 @@ public class Operation_DepRet_Activity extends AppCompatActivity implements View
                 String sItem = parent.getItemAtPosition(position).toString();
                 int pItem = parent.getSelectedItemPosition();
                 ((TextView) findViewById(R.id.tv_saldoAct_dr_op)).setText("Saldo actual (S/): " + listNSaldo.get(pItem).toString());
-                //Toast.makeText(Operation_DepRet_Activity.this, listNSaldo.get(pItem).toString(), Toast.LENGTH_SHORT).show();
                 at_corigen_op.setText(sItem);
             }
 

@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/tv_titulo_transf_op"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Transferencia"
@@ -31,7 +32,7 @@
                 android:text="Cuenta origen:"
                 android:layout_marginBottom="10dp"/>
             <TextView
-                android:id="@+id/tv_saldoAct_dr_op"
+                android:id="@+id/tv_saldoAct_transf_op"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Saldo (S/)"
